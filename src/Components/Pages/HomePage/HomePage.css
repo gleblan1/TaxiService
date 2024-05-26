@@ -1,0 +1,210 @@
+section {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+#section_welcome {
+    height: 80vh;
+    background-image: url(assets/main_background.jpg);
+}
+
+.blackout {
+    padding: 0 20%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+    font-family: 'Commissioner', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 2vh;
+    color: white;
+}
+
+#section_welcome h2 {
+    font-weight: 300;
+    font-family: 'Jost', sans-serif;
+    margin-bottom: 6vh;
+    color: rgb(190, 190, 190);
+}
+
+.start_button {
+    width: 28vh;
+    height: 7vh;
+    background-color: #006edc;
+    box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    border-radius: 1vh;
+    transition: 0.15s;
+    cursor: pointer;
+}
+
+.start_button:hover {
+    background-color: #91c0ee;
+    transition: 0.15s;
+}
+
+#section_about {
+    text-align: center;
+    padding: 13vh 20% 15vh 20%;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+
+#section_about h2 {
+    color: rgb(37, 37, 37);
+}
+
+.about_content {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    width: 47%;
+}
+
+#home_page h2:not(#section_welcome h2) {
+    font-family: 'Commissioner', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1vh;
+}
+
+.about_picture {
+    border-radius: 2vh;
+    background-image: url(/public/assets/about_picture.png);
+    width: 47%;
+    height: auto;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
+}
+
+#section_services {
+    background-image: url(/public/assets/services_background.jpg);
+}
+
+.blackout_2 {
+    width: 100%;
+    padding: 13vh 0 16vh;
+    background: rgba(5, 2, 12, 0.3);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3vh;
+}
+
+.blackout_2 hr {
+    margin: 0;
+    width: 10%;
+    border: 1px solid white;
+}
+
+#section_services ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    padding: 2vh 20%;
+    width: 100%;
+    margin: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 10%, rgba(3, 0, 12, 0.4) 25%, rgba(3, 0, 12, 0.4) 75%, rgba(0, 0, 0, 0) 90%)
+}
+
+#section_services li {
+    list-style: none;
+    font-size: 1.25rem;
+    min-height: 26px;
+    line-height: 26px;
+    padding-left: 40px;
+}
+
+#section_contact {
+    padding: 13vh 15% 15vh 15%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+}
+
+#section_contact form {
+    height: auto;
+    padding: 5vh 3vw;
+    border-radius: 2vh;
+    background: linear-gradient(rgb(15, 12, 24), rgb(13, 10, 19));
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.24);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#section_contact form input, textarea {
+    border-radius: 0.8vh;
+    min-height: 5vh;
+}
+
+#section_contact form input:not(input[type="submit"]), textarea {
+    background-color: rgb(51, 51, 63);
+    color: white;
+    box-sizing: border-box;
+    padding: 1vh 1.5vh;
+    margin-bottom: 1.5vh;
+}
+
+#section_contact form input:not(input[type="submit"])::placeholder, textarea::placeholder {
+    color: rgb(209, 209, 209);
+}
+
+.contact_content .basic_button {
+    width: 50%;
+    height: 6vh;
+    margin-top: 2vh;    
+}
+
+#section_contact h2 {
+    text-align: center;
+    color: rgb(37, 37, 37);
+}
+
+#section_contact hr {
+    width: 15%;
+}
+
+.contact_content {
+    display: flex;
+    gap: 6vw;
+}
+.contact_content > * {
+    width: 50%;
+}
+
+.contact_content > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+
+.indent {
+    text-indent: 3vw;
+}
+
+.contact_content .contacts {
+    margin-bottom: 2vh;
+}
+
+.contacts_email > a {
+    font-size: 1.25rem;
+}
+.contacts_email > img {
+    height: 2.5vh !important;
+}
+
+@media screen and (max-width: 1600px) {
+    #section_about {
+        padding: 12vh 12% !important;
+    }
+}

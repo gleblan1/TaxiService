@@ -1,0 +1,20 @@
+#account_form_section {
+    background-color: rgb(255, 255, 255);
+    padding: 10vh 10%;
+}
+
+#account_form_section h2 {
+    font-size: 2.5rem;
+    color: rgb(24, 24, 24);
+    margin-bottom: 1vh;
+    margin-left: 3vw;
+}
+
+.account_forms_wrapper {
+    display: flex;
+    gap: 2vw;
+}
+
+.account_forms_wrapper > * {
+    flex-grow: 1;
+}

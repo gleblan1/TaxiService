@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+html, body {
+    margin: 0;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    scroll-behavior: smooth;
+}
+
+* {
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    line-height: 1rem;
+}
+
+button {
+    border: none;
+    padding: 0;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+input, textarea {
+    outline: none;
+    border: none;
+    font-family: "Jost";
+    font-size: 1rem;
+}
+
+img[alt="phone"] {
+    padding: 1px;
+}
+
+main {
+    padding-top: 13vh;
+}
+
+textarea {
+    flex-grow: 1;
+    min-height: 12vh;
+    text-align: top;
+    resize: vertical;
+}
+
+hr {
+    width: 20%;
+    border: 1px solid rgb(255, 22, 22);
+}
+
+p, label {
+    font-size: 1.25rem;
+    color: rgb(71, 71, 71);
+}
+
+.basic_button {
+    font-size: 1.25rem;
+    font-weight: 500;
+    background: #006edc;
+    box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    border-radius: 2vh;
+    transition: 0.15s;
+    font-family: "Jost";
+}
+
+.basic_button:hover {
+    background-color: #5ea0e1;
+    transition: 0.15s;
+}
+
+.basic_button:disabled {
+    background: rgba(114, 114, 114, 0.7);
+    cursor: not-allowed;
+}

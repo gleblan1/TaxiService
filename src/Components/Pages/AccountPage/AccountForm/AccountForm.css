@@ -1,0 +1,12 @@
+#account_form {
+    box-shadow: none;
+}
+
+.passwords_wrapper {
+    display: flex;
+    gap: 2vw;
+}
+
+.passwords_wrapper > *{
+    flex-grow: 1;
+}

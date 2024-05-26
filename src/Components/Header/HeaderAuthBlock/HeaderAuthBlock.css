@@ -1,0 +1,130 @@
+.auth_buttons {
+    display: flex;
+    gap: 1.5vh;
+    width: auto;
+}
+
+.auth_buttons > button {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    border-radius: 8px;
+    height: 4vh;
+    padding: 1vh 15px;
+    cursor: pointer;
+    letter-spacing: 0;
+    font-weight: 600;
+}
+
+.auth_buttons > button:not(.basic_button) {
+    background-color: rgb(24, 24, 24);
+    transition: 0.2s;
+}
+
+.auth_buttons > button:not(.basic_button):hover {
+    background-color: rgb(73, 73, 73);
+    transition: 0.2s;
+}
+
+.auth_buttons > .basic_button {
+    box-shadow: none;
+}
+
+.profile_button {
+    width: 4vh;
+    height: 4vh;
+    border-radius: 5vh;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.profile_button:hover {
+    background-color: #006edc;
+    transition: 0.2s;
+}
+
+.profile_button_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profile_button_wrapper > p {
+    font-size: 1rem;
+}
+
+.profile_button > div {
+    width: 100%;
+    height: 100%;
+    background-image: url(/public/assets/profile_icon.png);
+    transition: 0.2s;
+}
+
+.profile_nav {
+    background-color: white;
+    position: fixed;
+    top: 13vh;
+    right: 8vw;
+    width: 200px;
+    padding: 3vh 0;
+    gap: 2vh;
+    height: auto;
+    border: 1px solid rgb(185, 185, 185);
+    border-top: none;
+    transform: translate(0, -101%);
+    z-index: -1;
+    transition: 0.2s;
+}
+
+.profile_nav > nav {
+    flex-direction: column;
+    width: 100%;
+    gap: 2vh;
+}
+
+#profile_checkbox {
+    display: none;
+}
+
+#profile_checkbox:checked ~ .profile_nav {
+    transform: translate(0, 0);
+    transition: 0.2s;
+}
+
+.profile_nav > nav > label {
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: rgb(90, 90, 90);
+    transition: 0.1s;
+}
+
+.profile_nav > nav > label:hover {
+    font-weight: 700;
+    color: rgb(43, 43, 43);
+    transition: 0.1s;
+}
+
+.button_text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+
+.nav_link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #006edc;
+    color: #000;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px !important;
+    cursor: pointer;
+}
+
+.nav_link:hover {
+    background-color: #5ea0e1;
+}

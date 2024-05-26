@@ -1,0 +1,8 @@
+{
+  "short_name": "Drive Ease",
+  "name": "The client part for the \"Drive Ease project\"",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -1,0 +1,56 @@
+.order-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    gap: 5vh;
+    padding: 20vh 0;
+}
+
+.table-deatils-wrapper{
+    display: flex;
+    padding: 100px;
+    border-radius: 20px;
+    align-items: end;
+    gap: 2vh;
+    box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.details_button{
+    border-radius: 5px !important;
+    height: 15%;
+    width: 150px;
+}
+
+
+.section_history-start{
+    align-items: start;
+}
+
+.selected_cars{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: start;
+    margin-left: 20vh;
+}
+
+.selected_cars hr{
+    width: 100%;
+}
+
+.cars-deatils-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    align-items: start;
+    margin-bottom: 10vh;
+    margin-left: 20vh;
+}
+
+.cars-deatils-wrapper hr{
+    width: 100%;
+}
+

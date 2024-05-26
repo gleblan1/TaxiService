@@ -1,0 +1,217 @@
+
+.wrapper-adresses_inputs {
+    display: flex;
+    gap: 3px;
+    flex-direction: column;
+}
+
+.wrapper-adresses_inputs > * {
+    flex-grow: 1;
+}
+
+.wrapper-adresses {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+
+.wrapper-adresses_block {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+#submit_adresses {
+    box-shadow: none;
+    border-radius: 10px;
+    letter-spacing: 0;
+    width: 30%;
+    align-self: flex-start;
+    height: 3rem;
+    font-size: 1.125rem;
+}
+
+#order_form {
+    max-width: 700px;
+    width: 100%;
+    gap: 4vh;
+}
+
+#order_form .points_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#submit_button_yellow {
+    background-color: #006edc;
+    transition: 0.15s;
+}
+
+#submit_button_yellow:hover {
+    background-color: #91c0ee;
+    transition: 0.15s;
+}
+
+.points_wrapper h4 {
+    font-size: 1.25rem;
+}
+
+.clue_adresses {
+    display: flex;
+    gap: 2vh;
+    align-items: center;
+}
+
+.clue_adresses > div {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    gap: 1vw;
+}
+
+.clue_adresses > div > .basic_button {
+    font-size: 1.125rem;
+    letter-spacing: 0;
+    border-radius: 1vh;
+    padding: 0 20px;
+    box-shadow: none;
+}
+.clue_adresses > div > input {
+    flex-grow: 1;
+    border-radius: 1vh;
+    padding: 0 12px;
+}
+
+.wrapper-intermediate_adresses {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    background-color: rgb(255, 248, 228);
+    padding: 2vh 2vw;
+    border-radius: 1vh;
+}
+
+.wrapper-intermediate_adresses h4, .wrapper-intermediate_adresses p {
+    font-size: 1.125rem;
+}
+
+.wrapper-intermediate_adresses .add_button {
+    width: 150px;
+    height: 40px;
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 10px;
+    background-color: transparent;
+    background-image: url(/public/assets/plus_icon.png);
+    background-position: center;
+    background-size: 16px;
+    transition: 0.2s;
+}
+
+.wrapper-intermediate_adresses .add_button:hover {
+    background-image: url(/public/assets/plus_icon_white.png);
+    background-color: rgb(100, 100, 100);
+    transition: 0.2s;
+}
+
+.close_button{
+    width: 25px;
+    height: 25px;
+    background-image: url(/public/assets/xmark.svg);
+}
+
+.reservation-wrapper{
+    display: flex;
+    align-items: center;
+}
+
+.reservation-wrapper label{
+    display: block;
+    width: 20%;
+}
+
+.reservation-wrapper_checkbox{
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    margin-left: 5%;
+}
+.reservation-wrapper_checkbox label{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    justify-self: center;
+}
+
+.time_input{
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 10px;
+    height: 3rem;
+    font-size: 1.125rem;
+    padding: 0 8px;
+    color: black;
+    width: 15%;
+}
+
+.wrapper-cars_block{
+    display: flex;
+    gap: 7vw;
+}
+
+.wrapper-cars_type, .wrapper-cars_count{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper-cars_count input{
+    width: 100%;
+}
+
+.react-calendar__navigation__label{
+    font-size: 1.125rem;
+    font: inherit;
+}
+
+.react-calendar{
+    font-family: 'Jost', sans-serif;
+}
+
+.wrapper-order_details{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper-order_details .number_input{
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 10px;
+    height: 3rem;
+    font-size: 1.125rem;
+    padding: 0 8px;
+    color: black;
+    width: 25%;
+    margin-right: 0.7vw;
+}
+
+.wrapper-order_details select{
+    border: 1px solid rgb(160, 160, 160);
+    border-radius: 10px;
+    height: 3rem;
+    font-size: 1.125rem;
+    padding: 0 8px;
+    color: black;
+    width: 50%;
+}
+
+.points_wrapper_cars div{
+    display: flex;
+    align-items: center;
+}
+
+.close_img{
+    height: 15px;
+}
+/* 
+.wrapper-date_block{
+    display: flex;
+    gap: 1vw;
+} */

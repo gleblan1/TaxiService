@@ -1,0 +1,18 @@
+#analytic_page > section {
+    padding: 6vh 15%;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+}
+
+#analytic_page {
+    background-color: white;
+}
+
+#analytic_page .basic_button {
+    box-shadow: none;
+    border-radius: 1vh;
+    width: 300px;
+    height: 3rem;
+    text-align: center;
+}

@@ -1,0 +1,63 @@
+#order_page section {
+    padding: 10vh 15%;
+}
+
+#order_page hr {
+    width: 80px;
+}
+
+#order_page h2 {
+    font-family: 'Commissioner', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+#section_order_instruction {
+    background-color: rgb(18, 15, 27);
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+    padding: 8vh 15% 12vh !important;
+}
+
+#section_order_instruction p, #section_order_instruction li {
+    color:rgb(233, 233, 233);
+}
+
+#section_order_instruction p {
+    line-height: 1.5rem;
+}
+
+#section_order_instruction li::marker {
+    color: #006edc;
+}
+
+#section_order_instruction h2 {
+    color: white;
+}
+
+#section_order_order {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    background-color: rgb(250, 249, 248);
+    padding: 8vh 15% 12vh !important;
+    align-items: center;
+}
+
+.info{
+    font-size: 1rem;
+    font-weight: 200;
+    background: #006edc;
+    box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    border-radius: 2vh;
+    transition: 0.15s;
+    font-family: "Jost";
+    padding: 5%;
+}
+
+.info:hover{
+    background: #67a8e9;
+}

@@ -1,0 +1,16 @@
+#account_info_form {
+    box-shadow: none;
+}
+
+.acc_info_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.acc_info_wrapper > .submit_button {
+    width: 150px;
+    align-self: flex-start;
+    margin-top: 0;
+    height: 4vh;
+}

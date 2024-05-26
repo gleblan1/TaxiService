@@ -1,0 +1,96 @@
+header {
+    width: 100%;
+    height: 13vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-bottom: 1px solid rgb(185, 185, 185);
+    position: fixed;
+    z-index: 1;
+    padding-top: 3vh;
+}
+
+.logo {
+    height: 200%;
+    width: 100%;
+}
+
+.main_header_info > a {
+    height: 40%;
+    cursor: pointer;
+}
+
+.main_header_info {
+    gap: 4vw;
+    padding: 0 10%;
+    height: 75%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+
+.contacts_wrapper {
+    width: 100%;
+    padding: 0 8%;
+    height: 25%;
+    border-bottom: 1px solid rgb(185, 185, 185);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contacts {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.contacts_wrapper > h3 {
+    font-family: "Commissioner";
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: rgb(85, 85, 85);
+}
+
+.contacts > div {
+    display: flex;
+    gap: 1vh;
+    align-items: center;
+}
+
+.contacts > div > img {
+    filter: invert(0.15);
+    height: 2vh;
+}
+
+header nav {
+    display: flex;
+    height: 60%;
+    gap: 4vh;
+    width: 60%;
+    justify-self: flex-start;
+}
+
+header nav > a {
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: rgb(90, 90, 90);
+    transition: 0.1s;
+}
+
+header nav > a:hover {
+    font-weight: 700;
+    color: rgb(43, 43, 43);
+    transition: 0.1s;
+}
+
+.a_to_home {
+    cursor: pointer;
+}
