@@ -37,8 +37,8 @@ export enum DriverStatuses {
 }
 
 export enum UserStatuses {
-    ACTIVE = "Активен",
-    DELETED = "Удален",
+    active = "Активен",
+    deleted = "Удален",
 }
 
 export enum Statuses {
@@ -55,7 +55,7 @@ export enum Types {
     PASSENGER_COMFORT = "Комфорт",
     PASSENGER_BUSINESS = "Бизнес",
     PASSENGER_ECONOMY = "Эконом",
-    MINIVAN = "Миниван",
+    MINIVAN = "Минивэн",
     LIMOUSINE = "Лимузин"
 }
 

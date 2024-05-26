@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Order } from "../../../../types/Types";
 import { api } from "../../../../axios/api";
 import OrderTableItem from "../../AnalyticPage/OrdersReqSection/OrderTableItem/OrderTableItem";
+import {OrderTypes, Statuses} from "../../../../enums/Enums";
 
 
 
@@ -151,12 +152,14 @@ export function AllOrders() {
                    <div>
                        <table>
                            <thead>
-                           <th>ID</th>
-                           <th>Из</th>
-                           <th>В</th>
-                           <th>Цена</th>
-                           <th>Автомобиль</th>
+                           <th>Отправление</th>
+                           <th>Назначение</th>
+                           <th>Стоимость</th>
+                           <th>Дата заказа</th>
+                           <th>Номера автомобилей</th>
+                           <th>Водители</th>
                            <th>Тип</th>
+                           <th>Статус</th>
                            <th></th>
                            </thead>
                            <tbody>
@@ -165,12 +168,24 @@ export function AllOrders() {
                                    <td>{order.id}</td>
                                    <td>{order.from.name}</td>
                                    <td>{order.to.name}</td>
-                                   <td>{order.cost}</td>
-                                   <td>{order?.car_driver && order.car_driver?.map((car) => {
-                                       return car.car.number
+                                   <td> {typeof order.cost === 'number' ? order.cost.toFixed(2) : ''}</td>
+                                   <td>{new Date(order?.order_time).toLocaleString('ru-RU', {
+                                       year: 'numeric',
+                                       month: '2-digit',
+                                       day: 'numeric',
+                                       hour: '2-digit',
+                                       minute: '2-digit',
+                                       hour12: false
                                    })}</td>
-                                   <td>{order.order_type}</td>
-                                   <td><button className="info" id={String(order.id)} onClick={() => handleInfo(order.id)}>Подробнее</button></td>
+                                   <td>{order.car_driver?.map((driver) => driver.car.number).join(', ') || ''}</td>
+                                   <td>{order.car_driver?.map((driver) => driver.driver.name).join(', ') || ''}</td>
+                                   <td>{OrderTypes[order.order_type as keyof typeof OrderTypes]}</td>
+                                   <td>{Statuses[order.status as keyof typeof Statuses]}</td>
+                                   <td>
+                                       <button className="info" id={String(order.id)}
+                                               onClick={() => handleInfo(order.id)}>Подробнее
+                                       </button>
+                                   </td>
                                </tr>
                            ))}
                            </tbody>
@@ -181,7 +196,7 @@ export function AllOrders() {
                        <button className="button-right" onClick={() => rightPageClick()}></button>
                    </div>
                </article>
-           </section> 
+            </section>
     </main>
   );
 }

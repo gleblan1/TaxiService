@@ -119,42 +119,7 @@ const OrdersReqSection: React.FC = () => {
                         {orders.map((order) => (
                             <tr>
                             <td>{order.id}</td>
-                            <td>
-                                <div className="table_grid">
-                                    <div className="item">Создан:</div>
-                                    <div className="item">{order.created_at}</div>
-                                    <div className="item">Водители:</div>
-                                    <div className="item">{order.car_driver?.map((driver) => driver.driver.name)}</div>
-                                    <div className="item">Из:</div>
-                                    <div className="item">
-                                        <div className="table_grid">
-                                            <div className="smaill_item">Адрес:</div>
-                                            <div className="smaill_item">{order.from?.name}</div>
-                                        </div>
-                                    </div>
-                                    <div className="item">В:</div>
-                                    <div className="item">
-                                        <div className="table_grid">
-                                            <div className="small_item">Адрес:</div>
-                                            <div className="small_item">{order.to?.name}</div>
-                                        </div>
-                                    </div>
-                                    <div className="item">Статус:</div>
-                                    <div className="item">{order.status}</div>
-                                    <div className="item">Расстояние:</div>
-                                    <div className="item">{order.mileage}</div>
-                                    <div className="item">Продолжительность:</div>
-                                    <div className="item">{order.duration}</div>
-                                    <div className="item">Сообщение:</div>
-                                    <div className="item">{order.message}</div>
-                                    <div className="item">Начат:</div>
-                                    <div className="item">{order.started_at}</div>
-                                    <div className="item">Завершен:</div>
-                                    <div className="item">{order.finished_at}</div>
-                                    <div className="item">Тип:</div>
-                                    <div className="item">{order.order_type}</div>
-                                </div>
-                            </td>
+                                <OrderTableItem currentOrder={order!}></OrderTableItem>
                             <td><button className="basic_button action_button" onClick={(e) => handleInfo(e, order.id)} style={{marginBottom: "10px"}}>Детали</button>
                             {order.status != 'ABORTED' && order.status != 'CLOSED' &&
                              <button className="basic_button action_button" onClick={(e) => handleCancel(e, order.id)}>Отменить</button>

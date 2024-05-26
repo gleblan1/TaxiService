@@ -4,6 +4,7 @@ import "./OrderDetailsPage.css";
 import { api } from "../../../../../axios/api";
 import { CarStatuses, OrderTypes, Statuses, Types } from "../../../../../enums/Enums";
 import { useParams } from "react-router-dom";
+import OrderTableItem from "../OrderTableItem/OrderTableItem";
 
 export const OrderDetailsPage: React.FC = () => { 
     const [availables, setAvailables] = useState<Available>();
@@ -25,25 +26,19 @@ export const OrderDetailsPage: React.FC = () => {
     }, [])
 //выбирать любого водителя у которого статус available
     useEffect(() => {
-            api.get(`admin/available`).then(res => res.data).then((data) => {
+            api.post(`admin/available`).then(res => res.data).then((data) => {
                 setAvailables(data);
             }).catch((err) => console.log(err));
     }, [isFree])
 
     useEffect(() => {
         if (isFree) {
-            const car_types = order?.car_driver.map((car) => {
-                return{
-                    count: order.car_driver.length,
-                    type: car.car.car_type
-                }
-            })
             const request: any = {
-                car_types: car_types,
                 duration: order?.duration,
                 order_time: order?.order_time
             }
-            api.get(`admin/free`, request).then(res => res.data).then((data) => {
+            console.log(order)
+            api.post(`admin/free`, request).then(res => res.data).then((data) => {
                 setAvailables(prevAvailables => ({
                     ...prevAvailables,
                     cars: [...prevAvailables?.cars || [], ...data.cars],
@@ -79,42 +74,43 @@ export const OrderDetailsPage: React.FC = () => {
                 </thead>
             <tbody>
             <tr>
-                <td>
-                    <div className="table_grid">
-                        <div className="item">Создан:</div>
-                        <div className="item">{order?.created_at}</div>
-                        <div className="item">Водители:</div>
-                        <div className="item">{order?.car_driver?.map((driver) => driver.driver.name)}</div>
-                        <div className="item">Из:</div>
-                        <div className="item">
-                            <div className="table_grid">
-                                <div className="smaill_item">Адрес:</div>
-                                <div className="smaill_item">{order?.from?.name}</div>
-                            </div>
-                        </div>
-                        <div className="item">В:</div>
-                        <div className="item">
-                            <div className="table_grid">
-                                <div className="small_item">Адрес:</div>
-                                <div className="small_item">{order?.to?.name}</div>
-                            </div>
-                        </div>
-                        <div className="item">Статус:</div>
-                        <div className="item">{order?.status}</div>
-                        <div className="item">Расстояние:</div>
-                        <div className="item">{order?.mileage}</div>
-                        <div className="item">Продолжительность:</div>
-                        <div className="item">{order?.duration}</div>
-                        <div className="item">Сообщение:</div>
-                        <div className="item">{order?.message}</div>
-                        <div className="item">Начат:</div>
-                        <div className="item">{order?.started_at}</div>
-                        <div className="item">Завершен:</div>
-                        <div className="item">{order?.finished_at}</div>
-                        <div className="item">Тип:</div>
-                        <div className="item">{order?.order_type}</div>
-                    </div>
-                </td>
+                {/*<td>*/}
+                {/*    <div className="table_grid">*/}
+                {/*        <div className="item">Создан:</div>*/}
+                {/*        <div className="item">{order?.created_at}</div>*/}
+                {/*        <div className="item">Водители:</div>*/}
+                {/*        <div className="item">{order?.car_driver?.map((driver) => driver.driver.name)}</div>*/}
+                {/*        <div className="item">Из:</div>*/}
+                {/*        <div className="item">*/}
+                {/*            <div className="table_grid">*/}
+                {/*                <div className="smaill_item">Адрес:</div>*/}
+                {/*                <div className="smaill_item">{order?.from?.name}</div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <div className="item">В:</div>*/}
+                {/*        <div className="item">*/}
+                {/*            <div className="table_grid">*/}
+                {/*                <div className="small_item">Адрес:</div>*/}
+                {/*                <div className="small_item">{order?.to?.name}</div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <div className="item">Статус:</div>*/}
+                {/*        <div className="item">{order?.status}</div>*/}
+                {/*        <div className="item">Расстояние:</div>*/}
+                {/*        <div className="item">{order?.mileage}</div>*/}
+                {/*        <div className="item">Продолжительность:</div>*/}
+                {/*        <div className="item">{order?.duration}</div>*/}
+                {/*        <div className="item">Сообщение:</div>*/}
+                {/*        <div className="item">{order?.message}</div>*/}
+                {/*        <div className="item">Начат:</div>*/}
+                {/*        <div className="item">{order?.started_at}</div>*/}
+                {/*        <div className="item">Завершен:</div>*/}
+                {/*        <div className="item">{order?.finished_at}</div>*/}
+                {/*        <div className="item">Тип:</div>*/}
+                {/*        <div className="item">{order?.order_type}</div>*/}
+                {/*    </div>*/}
+                {/*</td>*/}
+                <OrderTableItem currentOrder={order!}></OrderTableItem>
             </tr>
         </tbody>
     </table>

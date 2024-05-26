@@ -57,7 +57,8 @@ const OrderPage: React.FC = () => {
                                 <th></th>
                                 <th>Отправление</th>
                                 <th>Назначение</th>
-                                <th>Цена</th>
+                                <th>Стоимость</th>
+                                <th>Дата заказа</th>
                                 <th>Номера автомобилей</th>
                                 <th>Водители</th>
                                 <th>Тип</th>
@@ -70,7 +71,15 @@ const OrderPage: React.FC = () => {
                                             <td>{order.id}</td>
                                             <td>{order.from.name}</td>
                                             <td>{order.to.name}</td>
-                                            <td>{order.cost}</td>
+                                            <td> {typeof order.cost === 'number' ? order.cost.toFixed(2) : ''}</td>
+                                            <td>{new Date(order?.order_time).toLocaleString('ru-RU', {
+                                                year: 'numeric',
+                                                month: '2-digit',
+                                                day: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: false
+                                            })}</td>
                                             <td>{order.car_driver?.map((driver) => driver.car.number).join(', ') || ''}</td>
                                             <td>{order.car_driver?.map((driver) => driver.driver.name).join(', ') || ''}</td>
                                             <td>{OrderTypes[order.order_type as keyof typeof OrderTypes]}</td>

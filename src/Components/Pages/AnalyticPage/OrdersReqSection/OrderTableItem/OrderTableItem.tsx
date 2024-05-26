@@ -29,11 +29,11 @@ const OrderTableItem: React.FC<OrderTableItemProps> = ({ currentOrder }) => {
                         timeZoneName: 'short'
                     })}
                 </div>
-                <div className="item">Откуда:</div>
+                <div className="item">Отправление:</div>
                 <div className="item">
                     {currentOrder?.from?.name}
                 </div>
-                <div className="item">Куда:</div>
+                <div className="item">Назначение:</div>
                 <div className="item">
                     {currentOrder?.to?.name}
                 </div>
@@ -42,7 +42,7 @@ const OrderTableItem: React.FC<OrderTableItemProps> = ({ currentOrder }) => {
                 <div className="item">Продолжительность:</div>
                 <div className="item">{currentOrder?.duration}</div>
                 <div className="item">Стоимость:</div>
-                <div className="item">{currentOrder?.cost} руб.</div>
+                <div className="item">{typeof currentOrder?.cost === 'number' ? currentOrder?.cost.toFixed(2) : ''} руб.</div>
                 <div className="item">Тип заказа:</div>
                 <div className="item">{OrderTypes[currentOrder?.order_type as keyof typeof OrderTypes]}</div>
                 <div className="item">Номер автомобиля:</div>
