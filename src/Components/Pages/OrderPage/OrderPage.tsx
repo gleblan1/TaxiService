@@ -6,12 +6,16 @@ import { api } from "../../../axios/api";
 import { Order, Orders, OrdersRequestBody, ResponseErr } from "../../../types/Types";
 import {OrderTypes, Statuses} from "../../../enums/Enums";
 import React from "react";
+import docs from "../../../../public/assets/Акт выполненных работ.pdf"
+import agreement from "../../../../public/assets/Договор на услуги транспорта.pdf"
+import { useDocuments } from "../../../store/store";
 
 
 
 const OrderPage: React.FC = () => {
     const [page, setPage] = useState(1);
     const [orders, setOrders] = useState<Order[]>([]);
+    const [requiredOrders, setRequiredOrders] = useState<number[]>([]);
     
     const leftPageClick = () => {
         if (page > 1) {
@@ -29,6 +33,10 @@ const OrderPage: React.FC = () => {
         console.log(page)
     }
 
+    function handleCancelOrder(orderId: number) {
+        api.post(`/account/order/${orderId}/user-quit`)
+    }
+
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -36,7 +44,14 @@ const OrderPage: React.FC = () => {
                 params.append('limit', '3');
                 params.append('page', String(page));
                 params.append('sort', 'id');
-                const response = await api.get(`account/order?${params.toString()}`).then(res=>res.data).then(data=>setOrders(data)).catch(err=>console.log(err));
+                const response = await api.get(`account/order?${params.toString()}`).then(res=>res.data).then(data=>{
+                    setOrders(data)
+                    orders.map((order) => {
+                        if (order.documents_required){
+                            setRequiredOrders([...requiredOrders, order.id]);
+                        }
+                    })
+                }).catch(err=>console.log(err));
                 } catch (error) {
                 console.error('Error fetching orders:', error);
             }
@@ -44,6 +59,10 @@ const OrderPage: React.FC = () => {
 
         fetchOrders();
     }, [page]);
+
+    function handleDownloadDocs() {
+        console.log('Download docs');
+    }
 
     return (
         <main id="order_page">
@@ -63,6 +82,8 @@ const OrderPage: React.FC = () => {
                                 <th>Водители</th>
                                 <th>Тип</th>
                                 <th>Статус</th>
+                                <th>Акт выполненных работ</th>
+                                <th>Договор на услуги</th>
                                 <th></th>
                                 </thead>
                                 <tbody>
@@ -84,9 +105,21 @@ const OrderPage: React.FC = () => {
                                             <td>{order.car_driver?.map((driver) => driver.driver.name).join(', ') || ''}</td>
                                             <td>{OrderTypes[order.order_type as keyof typeof OrderTypes]}</td>
                                             <td>{Statuses[order.status as keyof typeof Statuses]}</td>
-                                            <td>
-                                                <button className="info" id={String(order.id)}>Подробнее</button>
-                                            </td>
+                                            {requiredOrders.includes(order.id) &&
+                                            <>
+                                                <td>
+                                                    <a href={docs} download={"Акт выполненных работ.pdf"}>
+                                                        <button className="info" id={String(order.id)+"docs"}>Скачать документы</button>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href={agreement} download={"Договор на услуги.pdf"}>
+                                                        <button className="info">Скачать документы</button>
+                                                    </a>
+                                                </td>
+                                            </>
+                                            }
+                                            {order?.status === 'ASSIGNED' || order?.status === 'CREATED' || order?.status === 'ACCEPTED' ? <td></td> : <td><button className="info" onClick={()=>handleCancelOrder(order.id)}>Отменить</button></td>}
                                         </tr>
                                     ))}
                                 </tbody>
