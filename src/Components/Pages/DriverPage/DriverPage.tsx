@@ -6,6 +6,7 @@ import axios from "axios";
 import { api } from "../../../axios/api";
 import { Order, OrdersRequestBody } from "../../../types/Types";
 import React from "react";
+import { OrderDetailsPage } from "../AnalyticPage/OrdersReqSection/OrderDeatilsPage/OrderDetailsPage";
 
 const DriverPage: React.FC = () => {
     const [hasOrder, setHasOrder] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const DriverPage: React.FC = () => {
     const [isStopped, setIsStopped] = useState<boolean>(false)
     const [ordersToAccept, setOrdersToAccept] = useState<Order[]>()
     const [orderToAccept, setOrderToAccept] = useState<Order>()
+    const [details, setDetails] = useState<Order>()
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -26,10 +28,9 @@ const DriverPage: React.FC = () => {
                 params.append('page', String(page));
                 params.append('sort', 'created_at');
 
-                api.get(`account/order?${params.toString()}`).then(res => res.data).then(data=>{
-                    setOrders(data)
-                    setHasOrder(data?.length > 0);
-                }).catch(err=>console.log(err));
+                const response = await api.get(`account/order?${params.toString()}`);
+                console.log(response.data)
+                setOrders(response.data);
                 // const acceptedOrder = orders?.find((order: Order) => order.status === 'ACCEPTED');
                 // setCurrentOrder(acceptedOrder || undefined);
                 const startedOrder = orders?.find((order: Order) => order.status === 'IN_PROGRESS');
@@ -39,6 +40,7 @@ const DriverPage: React.FC = () => {
                 const assignedOrders = orders?.filter((order: Order) => order.status === 'ASSIGNED');
                 setOrdersToAccept(assignedOrders);
                 setOrderToAccept(assignedOrders.length > 0 ? assignedOrders[0] : undefined);
+                setHasOrder(response?.data?.length > 0);
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
@@ -46,6 +48,8 @@ const DriverPage: React.FC = () => {
 
         fetchOrders();
     }, [page])
+
+    console.log(_currentOrder)
 
     function handleStart(){
         api.post(`account/order/${_currentOrder?.id}/start`).then(()=>{
@@ -87,37 +91,8 @@ const DriverPage: React.FC = () => {
     }
 
     function handleInfo(id: number){
-        //TODO: modal with order by id
-    
-        const order = orders.find((order: Order) => order.id === id);
-
-        <section id="section_orders">
-                <div>
-                    <h2>История заказов</h2>
-                    <hr/>
-                    <div className="form_base">
-                        {hasOrder ?
-                            <table>
-                                <thead>
-                                <th>Заказ</th>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                   <OrderTableItem currentOrder={order!}></OrderTableItem>
-                                </tr>
-                                </tbody>
-                            </table>
-                            :
-                            <div className="div_no_orders">
-                                <p>Вы еще не совершили заказов.</p>
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div className="actions">
-                    <p>Тут отображается история ваших заказов.</p>
-                </div>
-            </section>
+        const order = orders?.find((order: Order) => order.id === id);
+        setDetails(order);
     }
 
     return (
@@ -127,7 +102,7 @@ const DriverPage: React.FC = () => {
                     <h2>Текущий заказ</h2>
                     <hr/>
                     <div className="form_base">
-                        {isAccepted || isStarted ?
+                        {(isAccepted || isStarted) && _currentOrder ?
                             <table>
                                 <thead>
                                 <th>Заказ</th>
@@ -152,6 +127,7 @@ const DriverPage: React.FC = () => {
                         <button disabled={hasOrder && isAccepted} className="basic_button" style={{height: "50px"}}
                                 onClick={handleStart}>Начать</button>
                     }
+                    <p>Перед началом поездки нажмите кнопку "Начать".</p>
                 </div>
 
             </section>
@@ -195,10 +171,11 @@ const DriverPage: React.FC = () => {
                        <table>
                            <thead>
                            <th>ID</th>
-                           <th>Из</th>
-                           <th>В</th>
-                           <th>Цена</th>
-                           <th>Автомобиль</th>
+                           <th>Отправление</th>
+                           <th>Назначение</th>
+                           <th>Стоимость</th>
+                           <th>Дата заказа</th>
+                           <th>Номер автомобиля</th>
                            <th>Тип</th>
                            <th></th>
                            </thead>
@@ -208,12 +185,24 @@ const DriverPage: React.FC = () => {
                                    <td>{order.id}</td>
                                    <td>{order.from.name}</td>
                                    <td>{order.to.name}</td>
-                                   <td>{order.cost}</td>
+                                   <td> {typeof order.cost === 'number' ? order.cost.toFixed(2) : ''}</td>
+                                   <td>{new Date(order?.order_time).toLocaleString('ru-RU', {
+                                       year: 'numeric',
+                                       month: '2-digit',
+                                       day: 'numeric',
+                                       hour: '2-digit',
+                                       minute: '2-digit',
+                                       hour12: false
+                                   })}</td>
                                    <td>{order?.car_driver && order.car_driver?.map((car) => {
                                        return car.car.number
                                    })}</td>
                                    <td>{order.order_type}</td>
-                                   <td><button className="info" id={String(order.id)} onClick={() => handleInfo(order.id)}>Подробнее</button></td>
+                                   <td>
+                                       <button className="info" id={String(order.id)}
+                                               onClick={() => handleInfo(order.id)}>Подробнее
+                                       </button>
+                                   </td>
                                </tr>
                            ))}
                            </tbody>
@@ -224,7 +213,31 @@ const DriverPage: React.FC = () => {
                        <button className="button-right" onClick={() => rightPageClick()}></button>
                    </div>
                </article>
-           </section> 
+            </section>
+            {details &&
+                <section id="section_current_order">
+                    <div>
+                        <h2>Детали заказа</h2>
+                        <hr/>
+                        <div className="form_base">
+                        <table>
+                            <thead>
+                            <th>Заказ</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <OrderTableItem currentOrder={details!}></OrderTableItem>
+                            </tr>
+                            </tbody>
+                        </table>
+                        :
+                        <div className="div_no_orders">
+                            <p>Текущих заказов нет.</p>
+                        </div>
+                </div>
+            </div>
+        </section>
+           }
         </main>
     );
 }
