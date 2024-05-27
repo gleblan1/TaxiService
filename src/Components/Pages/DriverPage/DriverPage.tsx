@@ -7,9 +7,11 @@ import { api } from "../../../axios/api";
 import { Order, OrdersRequestBody } from "../../../types/Types";
 import React from "react";
 import { OrderDetailsPage } from "../AnalyticPage/OrdersReqSection/OrderDeatilsPage/OrderDetailsPage";
+import {Statuses} from "../../../enums/Enums";
 
 const DriverPage: React.FC = () => {
     const [hasOrder, setHasOrder] = useState<boolean>(false);
+    const [hasOrderToAccept, setHasOrderToAccept] = useState<boolean>(false);
     const [page, setPage] = useState<number>(1);
     const [orders, setOrders] = useState<Order[]>([]);
     const [isAccepted, setIsAccepted] = useState<boolean>(false)
@@ -20,6 +22,9 @@ const DriverPage: React.FC = () => {
     const [orderToAccept, setOrderToAccept] = useState<Order>()
     const [details, setDetails] = useState<Order>()
 
+    const [rateMessage, setRateMessage] = useState<string>("")
+    const [rateValue, setRateValue] = useState<number>(0)
+
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -29,27 +34,24 @@ const DriverPage: React.FC = () => {
                 params.append('sort', 'created_at');
 
                 const response = await api.get(`account/order?${params.toString()}`);
-                console.log(response.data)
                 setOrders(response.data);
                 // const acceptedOrder = orders?.find((order: Order) => order.status === 'ACCEPTED');
                 // setCurrentOrder(acceptedOrder || undefined);
                 const startedOrder = orders?.find((order: Order) => order.status === 'IN_PROGRESS');
-                setCurrentOrder(startedOrder || undefined);
-                setIsAccepted( !(startedOrder === null))
-                console.log("Is accepted: ", startedOrder, isAccepted)
+                setCurrentOrder(startedOrder);
+                setIsAccepted( !(startedOrder === null) && !(startedOrder === undefined));
                 const assignedOrders = orders?.filter((order: Order) => order.status === 'ASSIGNED');
                 setOrdersToAccept(assignedOrders);
                 setOrderToAccept(assignedOrders.length > 0 ? assignedOrders[0] : undefined);
-                setHasOrder(response?.data?.length > 0);
+                setHasOrder(_currentOrder !== undefined && _currentOrder !== null);
+                setHasOrderToAccept(orderToAccept !== undefined && orderToAccept !== null);
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
         };
 
         fetchOrders();
-    }, [page])
-
-    console.log(_currentOrder)
+    }, [page, ])
 
     function handleStart(){
         api.post(`account/order/${_currentOrder?.id}/start`).then(()=>{
@@ -69,6 +71,10 @@ const DriverPage: React.FC = () => {
         api.post(`account/order/${_currentOrder?.id}/quit`).then(()=>{
             setIsStopped(true)
         }).catch((error=>console.log(error)))
+    }
+
+    function handleCancelOrder(orderId: number) {
+        api.post(`/account/order/${orderId}/quit`)
     }
 
 
@@ -95,6 +101,21 @@ const DriverPage: React.FC = () => {
         setDetails(order);
     }
 
+    function handleAcceptOrder(id: number){
+        api.post(`account/order/${id}/accept`).then(()=>{
+            setIsAccepted(true)
+        }).catch((error=>console.log(error)))
+    }
+
+    function handleRateOrder(id: number){
+        api.post(`account/order/${id}/rate`, {
+            "message": rateMessage,
+            "orderID": id,
+            "rate": rateValue,
+            "userID": orders.find((order: Order) => order.id === id)?.user_id
+          }).catch((error=>console.log(error)))
+    }
+
     return (
         <main id="driver_page">
             <section id="section_current_order">
@@ -102,22 +123,24 @@ const DriverPage: React.FC = () => {
                     <h2>Текущий заказ</h2>
                     <hr/>
                     <div className="form_base">
-                        {(isAccepted || isStarted) && _currentOrder ?
+                        {(isAccepted || isStarted) && _currentOrder ? (
                             <table>
-                                <thead>
-                                <th>Заказ</th>
-                                </thead>
-                                <tbody>
+                            <thead>
                                 <tr>
-                                    <OrderTableItem currentOrder={_currentOrder!}></OrderTableItem>
+                                <th>Заказ</th>
                                 </tr>
-                                </tbody>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <OrderTableItem key={_currentOrder.id} currentOrder={_currentOrder} />
+                                </tr>
+                            </tbody>
                             </table>
-                            :
+                        ) : (
                             <div className="div_no_orders">
-                                <p>Текущих заказов нет.</p>
+                            <p>Текущих заказов нет.</p>
                             </div>
-                        }
+                        )}
                     </div>
                 </div>
                 <div className="actions">
@@ -136,22 +159,22 @@ const DriverPage: React.FC = () => {
                     <h2>Назначенный заказ</h2>
                     <hr/>
                     <div className="form_base">
-                        {!hasOrder ?
-                            <table>
-                                <thead>
+                    {hasOrderToAccept ? (
+                        <table>
+                            <thead>
+                            <tr>
                                 <th>Заказ</th>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <OrderTableItem currentOrder={orderToAccept!}></OrderTableItem>
-                                </tr>
-                                </tbody>
-                            </table>
-                            :
-                            <div className="div_no_orders">
-                                <p>Назначенных заказов нет.</p>
-                            </div>
-                        }
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <OrderTableItem key={orderToAccept?.id} currentOrder={orderToAccept!} />
+                            </tbody>
+                        </table>
+                        ) : (
+                        <div className="div_no_orders">
+                            <p>Назначенных заказов нет.</p>
+                        </div>
+                        )}
                     </div>
                 </div>
                 <div className="actions">
@@ -177,6 +200,7 @@ const DriverPage: React.FC = () => {
                            <th>Дата заказа</th>
                            <th>Номер автомобиля</th>
                            <th>Тип</th>
+                           <th>Статус</th>
                            <th></th>
                            </thead>
                            <tbody>
@@ -198,6 +222,7 @@ const DriverPage: React.FC = () => {
                                        return car.car.number
                                    })}</td>
                                    <td>{order.order_type}</td>
+                                   <td>{Statuses[order.status as keyof typeof Statuses]}</td>
                                    <td>
                                        <button className="info" id={String(order.id)}
                                                onClick={() => handleInfo(order.id)}>Подробнее
@@ -213,13 +238,13 @@ const DriverPage: React.FC = () => {
                        <button className="button-right" onClick={() => rightPageClick()}></button>
                    </div>
                </article>
-            </section>
-            {details &&
-                <section id="section_current_order">
-                    <div>
-                        <h2>Детали заказа</h2>
-                        <hr/>
-                        <div className="form_base">
+           </section> 
+           {details && details.status === "ACCEPTED" &&
+            (<section id="section_current_order">
+            <div>
+                <h2>Детали заказа</h2>
+                <hr/>
+                <div className="form_base">
                         <table>
                             <thead>
                             <th>Заказ</th>
@@ -230,14 +255,56 @@ const DriverPage: React.FC = () => {
                             </tr>
                             </tbody>
                         </table>
-                        :
-                        <div className="div_no_orders">
-                            <p>Текущих заказов нет.</p>
-                        </div>
                 </div>
             </div>
-        </section>
-           }
+            <button className="basic_button" onClick={()=>handleCancelOrder(details!.id)}>Отменить заказ</button>
+        </section>)
+        }
+        {details && details.status === "ASSIGNED" &&
+            (<section id="section_current_order">
+            <div>
+                <h2>Детали заказа</h2>
+                <hr/>
+                <div className="form_base">
+                        <table>
+                            <thead>
+                            <th>Заказ</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <OrderTableItem currentOrder={details!}></OrderTableItem>
+                            </tr>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+            <button className="basic_button" onClick={()=>handleCancelOrder(details!.id)}>Отказаться</button>
+            <button className="basic_button" onClick={()=>handleAcceptOrder(details!.id)}>Принять</button>
+        </section>)
+        }
+        {details && details.status === "CLOSED" &&
+            (<section id="section_current_order">
+            <div>
+                <h2>Детали заказа</h2>
+                <hr/>
+                <div className="form_base">
+                        <table>
+                            <thead>
+                            <th>Заказ</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <OrderTableItem currentOrder={details!}></OrderTableItem>
+                            </tr>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+            <input type="text" placeholder="Напишите сообщение" onChange={(e) => setRateMessage(e.target.value)}/>
+            <input type="number" max={5} min={0} placeholder="Оцените заказ" onChange={(e) => setRateValue(+e.target.value)}/>
+            <button className="basic_button" onClick={()=>handleRateOrder(details!.id)}>Оценить</button>
+        </section>)
+        }
         </main>
     );
 }
