@@ -1,8 +1,3 @@
-# React + Vite
+# Corporate cat order
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A web platform is designed to enable organizations and individuals to efficiently and economically order various vehicles for diverse events and needs. The platform incorporates a system for evaluating drivers and users, thereby enhancing the overall user experience. The project primarily targets car rental companies, event organizers, corporate travel departments, and individual users in need of transportation services. Platform oriented to work with 4 types of users: unauthorized users, drivers, customers and analytics (admins).
